@@ -1,0 +1,64 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the Homieso platform, either a seeker or an owner.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique Firebase Auth UID." },
+        "name": { "type": "string", "description": "The user's display name." },
+        "email": { "type": "string", "format": "email", "description": "The user's email address." },
+        "role": { "type": "string", "enum": ["seeker", "owner", "admin"], "description": "The user's role." },
+        "photoURL": { "type": "string", "description": "The user's profile picture URL." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the user account was created." }
+      },
+      "required": ["uid", "name", "email", "role"]
+    },
+    "PG": {
+      "title": "PG",
+      "description": "A PG or hostel listing in Mumbai.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The unique PG ID." },
+        "name": { "type": "string", "description": "The name of the PG." },
+        "location": { "type": "string", "description": "The locality in Mumbai." },
+        "price": { "type": "number", "description": "Monthly rent in INR." },
+        "type": { "type": "string", "enum": ["Boys", "Girls", "Co-living"], "description": "The type of accommodation." },
+        "rating": { "type": "number", "description": "Average user rating." },
+        "image": { "type": "string", "description": "Primary image URL." },
+        "amenities": { "type": "array", "items": { "type": "string" }, "description": "List of amenities." },
+        "ownerId": { "type": "string", "description": "The UID of the owner who listed this PG." },
+        "isVerified": { "type": "boolean", "description": "Whether the PG is verified by Homieso." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the listing was created." }
+      },
+      "required": ["name", "location", "price", "type", "ownerId"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "A booking request for a PG.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The unique booking ID." },
+        "pgId": { "type": "string", "description": "The ID of the PG being booked." },
+        "seekerId": { "type": "string", "description": "The UID of the seeker making the booking." },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"], "description": "The status of the booking." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the booking was made." }
+      },
+      "required": ["pgId", "seekerId", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents."
+    },
+    "/pgs/{pgId}": {
+      "schema": "PG",
+      "description": "PG and hostel listing documents."
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Booking request documents."
+    }
+  }
+}

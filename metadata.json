@@ -1,0 +1,7 @@
+{
+  "name": "Homieso",
+  "description": "One stop shop for all your PG and accommodation needs in Mumbai. Find your peace with verified hostels and PGs.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
